@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo_api
+    username: postgres
+    password: 123
+    hikari:
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      connection-timeout: 3000
+      auto-commit: off
