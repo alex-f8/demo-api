@@ -33,7 +33,7 @@ create table products.accounting
     product_id bigint                              not null
         constraint acc_prod_fk
             references products.products,
-    client_id  bigserial
+    client_id  bigint
         constraint acc_client_fk
             references products.clients,
     amount     integer                             not null,
