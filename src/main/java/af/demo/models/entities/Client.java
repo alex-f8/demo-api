@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(schema = "products", name = "clients")
 public class Client {
@@ -18,4 +18,6 @@ public class Client {
     private Long id;
     @Column(name = "full_name")
     private String fullName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client", orphanRemoval = true, fetch = FetchType.EAGER)
+    List<Accounting> accountings;
 }

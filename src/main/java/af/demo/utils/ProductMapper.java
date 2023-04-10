@@ -20,6 +20,7 @@ public class ProductMapper {
         Product product = productCast(type, productDTO.getParam1());
         product.setTitle(productDTO.getTitle());
         product.setDescription(productDTO.getDescription());
+        product.setType(type);
         product.setAmount(productDTO.getAmount());
         return product;
     }
@@ -37,7 +38,8 @@ public class ProductMapper {
         }
         if (type.equals("eraser")) {
             Eraser eraser = new Eraser();
-            eraser.setSoft(Boolean.valueOf(param1));
+            eraser.setSoft(param1);
+            return eraser;
         }
         return new Product();
     }

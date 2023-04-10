@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(schema = "products", name = "accounting")
 public class Accounting {
@@ -21,7 +21,14 @@ public class Accounting {
     @Column(name = "client_id")
     private Long clientId;
     @Column(name = "amount")
-    private Long amount;
+    private Integer amount;
+    @ManyToOne
+    @JoinColumn(name = "client_id", insertable = false, updatable = false)
+    private Client client;
     @Column(name = "created_at")
-    private Long createdAt;
+    private LocalDateTime createdAt;
+
+    {
+        this.createdAt = LocalDateTime.now();
+    }
 }

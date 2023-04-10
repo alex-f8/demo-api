@@ -22,6 +22,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ErrorBodyDTO> handleApiInnerExceptions(Exception exception) {
         // send exception message is not necessarily
+        exception.printStackTrace();
         ErrorBodyDTO errorBodyDTO = new ErrorBodyDTO("Some exception on server side", Map.of("description", exception.getMessage()));
         return new ResponseEntity<>(errorBodyDTO, HttpStatus.INTERNAL_SERVER_ERROR);
     }

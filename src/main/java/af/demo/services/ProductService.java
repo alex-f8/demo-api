@@ -1,7 +1,7 @@
 package af.demo.services;
 
-import af.demo.models.entities.Product;
 import af.demo.exceptions.ApiException;
+import af.demo.models.entities.Product;
 import af.demo.models.entities.products.Eraser;
 import af.demo.models.entities.products.Note;
 import af.demo.models.entities.products.Pen;
@@ -42,8 +42,8 @@ public class ProductService {
      */
     @Transactional
     public Product createProduct(Product product) {
-        Optional<Product> optProd = productRepository.findByType(product.getType());
-        if (optProd.isPresent()) return product;
+        Optional<Product> optProd = productRepository.findByType(product.getType().toUpperCase());
+        if (optProd.isPresent()) return optProd.get();
         Product resp;
         if (product instanceof Pen) resp = penRepository.save((Pen) product);
         else if (product instanceof Note) resp = noteRepository.save((Note) product);

@@ -13,36 +13,26 @@ public class AccountingService {
 
     private final ProductRepository productRepository;
     private final ClientRepository clientRepository;
+    private final TransactionService transactionService;
 
-    public AccountingService(ProductRepository productRepository, ClientRepository clientRepository) {
+    public AccountingService(ProductRepository productRepository, ClientRepository clientRepository, TransactionService transactionService) {
         this.productRepository = productRepository;
         this.clientRepository = clientRepository;
+        this.transactionService = transactionService;
     }
+
 
     @Transactional
     public Product addAmount(Long productId, AmountDTO amountDTO) {
-        Product product = productRepository.findByIdSecured(productId).orElseThrow(
-                () -> new ApiException("product with id=%s dont found".formatted(productId))
-        );
-        product.setAmount(product.getAmount() + amountDTO.getAmount());
-        return product;
+        return transactionService.addAmount(productId, amountDTO);
     }
 
     public Product getProductToClient(Long productId, Long clientId, AmountDTO amountDTO) {
         clientRepository.findById(clientId).orElseThrow(
                 () -> new ApiException("wrong client id=%s".formatted(clientId))
         );
-        subtractAmount(productId, amountDTO.getAmount());
+        transactionService.subtractAmount(productId, clientId, amountDTO.getAmount());
         return productRepository.findById(productId).get();
     }
 
-    @Transactional
-    public void subtractAmount(Long productId, Integer amount) {
-        Product product = productRepository.findByIdSecured(productId).orElseThrow(
-                () -> new ApiException("product with id=%s dont found".formatted(productId))
-        );
-        product.setAmount(product.getAmount() - amount);
-        if (product.getAmount() < 0)
-            throw new ApiException("client cant take product, because peaces of amount is not enough");
-    }
 }

@@ -1,6 +1,5 @@
 package af.demo.controllers;
 
-import af.demo.models.dto.AmountDTO;
 import af.demo.models.dto.ProductDTO;
 import af.demo.models.entities.Product;
 import af.demo.services.ProductService;

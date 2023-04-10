@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorValue("PRODUCT")
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
 @Table(schema = "products", name = "products")
 public class Product {
